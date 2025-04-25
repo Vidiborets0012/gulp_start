@@ -10,6 +10,11 @@ const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 const avif = require('gulp-avif');
 const newer = require('gulp-newer');
+const ttf2woff2 = require('gulp-ttf2woff2');
+
+function fonts() {
+  return src('app/fonts/*.ttf').pipe(ttf2woff2()).pipe(dest('app/fonts'));
+}
 
 function images() {
   return src(['app/images/src/*.*', '!app/images/src/*.svg'])
@@ -67,8 +72,8 @@ function building() {
       'app/*.html',
       'app/js/main.min.js',
       'app/css/style.min.css',
-      'app/images/**/*.*',
-      'app/fonts/*.*',
+      'app/images/*.*',
+      'app/fonts/*.woff2',
     ],
     { base: 'app' }
   ).pipe(dest('dist'));
@@ -78,6 +83,7 @@ exports.styles = styles;
 exports.watching = watching;
 exports.scripts = scripts;
 exports.images = images;
+exports.fonts = fonts;
 exports.cleanDist = cleanDist;
 exports.building = building;
 
