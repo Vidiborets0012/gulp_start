@@ -38,8 +38,22 @@ function watching() {
   watch(['app/*.html']).on('change', browserSync.reload);
 }
 
+function building() {
+  return src(
+    [
+      'app/*.html',
+      'app/js/main.min.js',
+      'app/css/style.min.css',
+      'app/images/**/*.*',
+      'app/fonts/*.*',
+    ],
+    { base: 'app' }
+  ).pipe(dest('dist'));
+}
+
 exports.styles = styles;
 exports.watching = watching;
 exports.scripts = scripts;
+exports.building = building;
 
 exports.default = parallel(styles, scripts, watching);
