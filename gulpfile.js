@@ -2,6 +2,8 @@ const { src, dest, watch, series, parallel } = require('gulp');
 
 const scss = require('gulp-sass')(require('sass'));
 const browserSync = require('browser-sync').create();
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify-es').default;
 
 function styles() {
   return src('app/scss/style.scss')
