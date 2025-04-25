@@ -41,3 +41,5 @@ function watching() {
 exports.styles = styles;
 exports.watching = watching;
 exports.scripts = scripts;
+
+exports.default = parallel(styles, scripts, watching);
