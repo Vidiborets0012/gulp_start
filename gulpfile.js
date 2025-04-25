@@ -4,7 +4,10 @@ const scss = require('gulp-sass')(require('sass'));
 const browserSync = require('browser-sync').create();
 
 function styles() {
-  return src('app/scss/style.scss').pipe(scss()).pipe(dest('app/css')).pipe(browserSync.stream());
+  return src('app/scss/style.scss')
+    .pipe(scss({ style: 'compressed' }))
+    .pipe(dest('app/css'))
+    .pipe(browserSync.stream());
 }
 
 function watching() {
