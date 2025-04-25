@@ -5,6 +5,7 @@ const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
 const autoprefixer = require('gulp-autoprefixer');
+const clean = require('gulp-clean');
 
 function styles() {
   return src('app/scss/style.scss')
@@ -38,6 +39,10 @@ function watching() {
   watch(['app/*.html']).on('change', browserSync.reload);
 }
 
+function cleanDist() {
+  return src('dist').pipe(clean());
+}
+
 function building() {
   return src(
     [
@@ -54,6 +59,7 @@ function building() {
 exports.styles = styles;
 exports.watching = watching;
 exports.scripts = scripts;
+exports.cleanDist = cleanDist;
 exports.building = building;
 
 exports.default = parallel(styles, scripts, watching);
