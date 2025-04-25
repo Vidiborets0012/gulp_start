@@ -15,3 +15,6 @@ function watching() {
   });
   watch(['app/scss/style.scss'], styles);
 }
+
+exports.styles = styles;
+exports.watching = watching;
