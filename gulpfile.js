@@ -12,6 +12,14 @@ function styles() {
     .pipe(browserSync.stream());
 }
 
+function scripts() {
+  return src(['app/js/main.js'])
+    .pipe(concat('main.min.js'))
+    .pipe(uglify())
+    .pipe(dest('app/js'))
+    .pipe(browserSync.stream());
+}
+
 function watching() {
   browserSync.init({
     server: {
@@ -24,3 +32,4 @@ function watching() {
 
 exports.styles = styles;
 exports.watching = watching;
+exports.scripts = scripts;
