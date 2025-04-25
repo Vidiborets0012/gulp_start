@@ -63,3 +63,4 @@ exports.cleanDist = cleanDist;
 exports.building = building;
 
 exports.default = parallel(styles, scripts, watching);
+exports.build = series(cleanDist, building);
