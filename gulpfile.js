@@ -14,6 +14,7 @@ function watching() {
     },
   });
   watch(['app/scss/style.scss'], styles);
+  watch(['app/*.html']).on('change', browserSync.reload);
 }
 
 exports.styles = styles;
