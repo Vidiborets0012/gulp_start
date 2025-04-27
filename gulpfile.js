@@ -31,11 +31,15 @@ function images() {
 
 function styles() {
   return src('app/scss/style.scss')
+    .pipe(scss({ style: 'expanded' }))
     .pipe(
       autoprefixer({
         overrideBrowserlist: ['last 10 versions'],
       })
     )
+    .pipe(dest('app/css'))
+    .pipe(browserSync.stream())
+
     .pipe(concat('style.min.css'))
     .pipe(scss({ style: 'compressed' }))
     .pipe(dest('app/css'))
@@ -76,7 +80,8 @@ function building() {
       'app/fonts/*.woff2',
     ],
     { base: 'app' }
-  ).pipe(dest('dist'));
+  ).pipe(dest('build-output'));
+  // ).pipe(dest('dist'));
 }
 
 exports.styles = styles;
