@@ -17,16 +17,20 @@ function fonts() {
 }
 
 function images() {
-  return src(['app/images/src/*.*', '!app/images/src/*.svg'])
-    .pipe(newer('app/images'))
-    .pipe(avif({ quality: 50 }))
-    .pipe(src('app/images/src/*.*'))
-    .pipe(newer('app/images'))
+  const sourcePath = 'app/images/src/**/*.*'; // Шлях до всіх файлів у src та підпапках
+  const excludedSvgPath = '!app/images/src/**/*.svg'; // Виключаємо SVG з усіх підпапок
+  const destinationPath = 'app/images'; // Папка призначення
+
+  return src([sourcePath, excludedSvgPath])
+    .pipe(newer(destinationPath))
+    .pipe(avif({ quality: 75 }))
+    .pipe(src([sourcePath, excludedSvgPath]))
+    .pipe(newer(destinationPath))
     .pipe(webp())
-    .pipe(src('app/images/src/*.*'))
-    .pipe(newer('app/images'))
+    .pipe(src([sourcePath, excludedSvgPath]))
+    .pipe(newer(destinationPath))
     .pipe(imagemin())
-    .pipe(dest('app/images'));
+    .pipe(dest(destinationPath));
 }
 
 function styles() {
@@ -61,13 +65,14 @@ function watching() {
     },
   });
   watch(['app/scss/style.scss'], styles);
-  watch(['app/images/src'], images);
+  // watch(['app/images/src'], images);
+  watch(['app/images/src/**/*.*'], images); // Спостерігати за всіма підпапками
   watch(['app/js/main.js'], scripts);
   watch(['app/*.html']).on('change', browserSync.reload);
 }
 
 function cleanDist() {
-  return src('dist').pipe(clean());
+  return src('docs').pipe(clean());
 }
 
 function building() {
@@ -76,11 +81,11 @@ function building() {
       'app/*.html',
       'app/js/main.min.js',
       'app/css/style.min.css',
-      'app/images/*.*',
+      'app/images/**/*.*', // Автоматично копіює всі файли та підпапки з app/images
       'app/fonts/*.woff2',
     ],
     { base: 'app' }
-  ).pipe(dest('build-output'));
+  ).pipe(dest('docs'));
   // ).pipe(dest('dist'));
 }
 
